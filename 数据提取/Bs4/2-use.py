@@ -101,10 +101,94 @@ html = """
 
 """
 
+soup = BeautifulSoup(html,'lxml')
 
 # 1. 获取所有tr标签
+# trs = soup.find_all('tr')
+# for tr in trs:
+#     print(tr)
+#     print('='*30)
+#     print(type(tr))
+#     break
+
 # 2. 获取第二个tr标签
+# tr = soup.find_all('tr',limit=2)[0]
+# #limit参数 最多获取多少个元素
+# #find_all返回的是列表下表从0开始
+# # 所以[1]表示第二个tr标签
+# print(tr)
+
+
 # 3. 获取所有class等于even的tr标签
+# trs = soup.find_all('tr',class_='even')
+# #python中class是一个关键字
+# #所以bs4中的标签class用class_表示
+# #在soup中搜索所有的  tr标签且class等于even
+# for tr in trs:
+#     print(tr)
+#     print('+'*30)
+# #第二种过滤方法
+# # trs = soup.find_all('tr',attrs={'class':even})
+
 # 4. 获取所有id等于test，class也等于test的a标签
+# trs = soup.find_all('a',class_='test',id='test')
+# # 或者
+# # trs = soup.find_all('a',attrs={'class':'test','id':'test'})
+# for a in trs:
+#     print(a)
+
 # 5. 获取所有a标签的href属性的值（职位详细信息的url）
+# alist = soup.find_all('a')
+# for a in alist:
+#     #获取属性
+#     #通过下标
+#     href = a['href']
+#     print(href)
+#     #或者attrs属性
+#     # href = a.attrs['herf']
+#     # print(href)
 # 6. 获取所有职位信息（纯文本）
+
+trs = soup.find_all('tr')[1:]
+#[1:]过滤掉第零个tr标签
+movies=[]
+for tr in trs:
+    # try:
+    #     tds = tr.find_all("td")
+    #     title = tds[0].string
+    #     #加上  .string表示只要tds[0]里面的字符串
+    #     # print(title)
+    #     sort = tds[1].string
+    #     # print(sort)
+    #     nums = tds[2].string
+    #     adder = tds[3].string
+    #     data = tds[4].string
+    #     info = {
+    #         '职位':title,
+    #         '类别':sort,
+    #         '所需人数':nums,
+    #         '地点':adder,
+    #         '发布时间':data,
+    #     }
+    # except IndexError:
+    #     pass
+    # print(info)
+
+    #第二种方法
+    movie={}
+    try:
+        infos = list(tr.stripped_strings)
+        #tr.stripped_strings 获取tr内的非标签类的非空白内容
+        #tr.strings 获取tr内的非标签内容
+        movie['title']= infos[0]
+        movie['categoy']= infos[1]
+        movie['nums']= infos[2]
+        movie['city']= infos[3]
+        movie['pubtim']= infos[4]
+        movies.append(movie)
+    except IndexError:
+        pass
+print(movies)
+
+
+
