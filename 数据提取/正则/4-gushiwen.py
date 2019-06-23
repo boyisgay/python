@@ -21,7 +21,7 @@ def parse_page(url):
     for content in content_tags:
         # print(contents)
         x = re.sub(r'.*?',"",content)
-        x = re.sub(r'<br />',"",x)
+        # x = re.sub(r'<b />',"",x)r
         contents.append(x.strip())
 
 #zip()函数的用法
